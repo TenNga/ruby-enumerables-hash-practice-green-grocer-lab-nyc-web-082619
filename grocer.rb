@@ -46,3 +46,14 @@ def checkout(cart, coupons)
    return total
   end
 end
+
+def checkout(cart, coupons)
+  new_cart = consolidate_cart(cart)
+  w_coupons = apply_coupons(new_cart, coupons)
+  w_clearance = apply_clearance(new_cart)
+  final_cost = 0 
+  w_clearance.each do |item, attribute|
+    final_cost += (attribute[:price] * attribute[:count])
+  end
+  final_cost = (final_cost * 0.9) if final_cost > 100
+end
